@@ -1,0 +1,147 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Relatório - Desempenho Estudantil</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #0f2027;  /* fallback for old browsers */
+            background: linear-gradient(to right, #2c5364, #203a43, #0f2027);
+            color: #ecf0f1;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            padding: 20px;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.2);
+            font-size: 2em;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        section {
+            max-width: 960px;
+            margin: auto;
+            padding: 20px;
+        }
+        h2 {
+            border-left: 5px solid #00adb5;
+            padding-left: 10px;
+            margin-top: 40px;
+        }
+        img {
+            width: 100%;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.4);
+        }
+        button {
+            background-color: #00adb5;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 20px 0;
+            font-size: 1em;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #028891;
+        }
+        #codeContainer {
+            display: none;
+            background: #1e1e1e;
+            color: #dcdcdc;
+            padding: 20px;
+            border-radius: 12px;
+            overflow-x: auto;
+            white-space: pre;
+            font-family: monospace;
+            margin-top: 20px;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.4);
+            font-size: 0.9em;
+            color: #aaa;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <header>Relatório Interativo - Desempenho Estudantil</header>
+
+    <section>
+        <h2>📊 Gráficos de Análise</h2>
+        <img src="grafico_distribuicoes.png" alt="Distribuições das Notas"/>
+        <img src="grafico_boxplot_genero.png" alt="Boxplot por Gênero"/>
+        <img src="grafico_scatter_leitura_matematica.png" alt="Scatter Leitura vs Matemática"/>
+        <img src="grafico_heatmap_correlacao.png" alt="Heatmap de Correlação"/>
+
+        <h2>🧠 Código da Análise</h2>
+        <button onclick="document.getElementById('codeContainer').style.display = (document.getElementById('codeContainer').style.display === 'none' ? 'block' : 'none')">Mostrar / Ocultar Código</button>
+        <div id="codeContainer">
+
+# Análise Exploratória de Dados - Desempenho dos Alunos
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Carregar os dados
+df = pd.read_csv("StudentsPerformance.csv")
+
+# Visão geral
+display(df.head())
+display(df.describe(include='all'))
+
+# Verificar valores ausentes
+print("Valores ausentes por coluna:")
+print(df.isnull().sum())
+
+# Distribuições das notas
+plt.figure(figsize=(16, 4))
+for i, col in enumerate(['math score', 'reading score', 'writing score']):
+    plt.subplot(1, 3, i+1)
+    sns.histplot(df[col], bins=15, kde=True)
+    plt.title(f'Distribuição - {col}')
+plt.tight_layout()
+plt.show()
+
+# Boxplot por gênero
+plt.figure(figsize=(12, 4))
+sns.boxplot(data=df, x='gender', y='math score')
+plt.title('Notas de Matemática por Gênero')
+plt.show()
+
+# Scatter plot - Leitura vs Matemática
+plt.figure(figsize=(6, 6))
+sns.scatterplot(data=df, x='reading score', y='math score', hue='gender')
+plt.title('Relação entre Leitura e Matemática')
+plt.show()
+
+# Heatmap de Correlação
+plt.figure(figsize=(6, 5))
+sns.heatmap(df[['math score', 'reading score', 'writing score']].corr(), annot=True, cmap='coolwarm')
+plt.title('Correlação entre Notas')
+plt.show()
+
+        </div>
+    </section>
+
+    <footer style="background-color: #06284d; padding: 20px; text-align: center;">
+        <p>SAVIO.DEV</p>
+        <a href="https://wa.me/86 999482285?text=Olá%2C%20quero%20mais%20informações!" target="_blank" style="text-decoration: none; color: green; font-weight: bold;">
+          📱WhatsApp
+        </a>
+      </footer>
+      
+            
+</body>
+</html>
